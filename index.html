@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonim İtiraf</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, sans-serif;
+            background: #0f0f0f;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: #0f0f0f;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .file-upload {
+            margin: 15px 0;
+        }
+        .file-upload label {
+            display: block;
+            background: #2a2a2a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .file-upload label:hover { background: #333; }
+        .file-upload input { display: none; }
+        .file-name {
+            color: #888;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .send-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .send-btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .success h2 { color: #4CAF50; margin-bottom: 10px; }
+        .note {
+            color: #ff9800;
+            font-size: 12px;
+            margin: 15px 0 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="formContainer">
+        <h1>🫣 Anonim İtiraf</h1>
+        <p class="subtitle">Kimliğin gizli kalacak, rahat ol</p>
+        <form id="itirafForm">
+            <textarea name="itiraf" placeholder="İtirafını buraya yaz..." required maxlength="2000"></textarea>
+            <div class="file-upload">
+                <label for="file">📎 Fotoğraf veya Video Ekle (Max 100MB)</label>
+                <input type="file" id="file" name="media" accept="image/*,video/*" onchange="showFileName(this)">
+                <div class="file-name" id="fileName"></div>
+            </div>
+            <p class="note">⚠️ Video max 100MB olmalı</p>
+            <button type="submit" class="send-btn">Gönder</button>
+        </form>
+    </div>
+    <div class="success" id="successMessage">
+        <h2>✅ Gönderildi!</h2>
+        <p>İtirafın başarıyla iletildi.</p>
+        <br>
+        <button onclick="location.reload()" style="background:#667eea; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">Yeni İtiraf</button>
+    </div>
+    <script>
+        function showFileName(input) {
+            const fileName = document.getElementById('fileName');
+            if (input.files[0]) {
+                const size = (input.files[0].size / (1024 * 1024)).toFixed(2);
+                fileName.textContent = 'Seçilen: ' + input.files[0].name + ' (' + size + ' MB)';
+            }
+        }
+        document.getElementById('itirafForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('.send-btn');
+            btn.textContent = 'Gönderiliyor...';
+            btn.disabled = true;
+            const fileInput = document.getElementById('file');
+            if (fileInput.files[0]) {
+                const sizeMB = fileInput.files[0].size / (1024 * 1024);
+                if (sizeMB > 100) {
+                    alert('Dosya 100MB\'dan küçük olmalı!');
+                    btn.textContent = 'Gönder';
+                    btn.disabled = false;
+                    return;
+                }
+            }
+            const formData = new FormData(this);
+            try {
+                const response = await fetch('gonder.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('formContainer').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    alert('Hata: ' + result.error);
+                }
+            } catch (err) {
+                alert('Bağlantı hatası!');
+            }
+            btn.textContent = 'Gönder';
+            btn.disabled = false;
+        });
+    </script>
+</body>
+  </html>
