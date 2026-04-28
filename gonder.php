@@ -55,7 +55,7 @@ if ($response && $response['ok'] === true) {
         curl_setopt($ch2, CURLOPT_POST, 1);
         curl_setopt($ch2, CURLOPT_POSTFIELDS, $post_fields);
         curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch2, CURLOPT_TIMEOUT, 120);
+        curl_setopt($ch2, CURLOPT_TIMEOUT, 300);
         curl_exec($ch2);
         curl_close($ch2);
     }
