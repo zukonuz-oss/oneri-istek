@@ -106,11 +106,11 @@
         <form id="itirafForm">
             <textarea name="itiraf" placeholder="İtirafını buraya yaz..." required maxlength="2000"></textarea>
             <div class="file-upload">
-                <label for="file">📎 Fotoğraf Ekle</label>
+                <label for="file">📎 Fotoğraf veya Video Ekle (Max 100MB)</label>
                 <input type="file" id="file" name="media" accept="image/*,video/*" onchange="showFileName(this)">
                 <div class="file-name" id="fileName"></div>
             </div>
-            <p class="note">⚠️ Fotoğraf max 100MB olmalı</p>
+            <p class="note">⚠️ Video max 100MB olmalı</p>
             <button type="submit" class="send-btn">Gönder</button>
         </form>
     </div>
@@ -121,6 +121,9 @@
         <button onclick="location.reload()" style="background:#667eea; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">Yeni İtiraf</button>
     </div>
     <script>
+        // Sayfa açılınca sunucuyu önceden uyandır
+        fetch('gonder.php', { method: 'HEAD' }).catch(() => {});
+
         function showFileName(input) {
             const fileName = document.getElementById('fileName');
             if (input.files[0]) {
@@ -147,7 +150,8 @@
             try {
                 const response = await fetch('gonder.php', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    signal: AbortSignal.timeout(90000)
                 });
                 const result = await response.json();
                 if (result.success) {
@@ -157,11 +161,11 @@
                     alert('Hata: ' + result.error);
                 }
             } catch (err) {
-                alert('Bağlantı hatası!');
+                alert('Bağlantı hatası! Lütfen tekrar dene.');
             }
             btn.textContent = 'Gönder';
             btn.disabled = false;
         });
     </script>
 </body>
-  </html>
+</html>
