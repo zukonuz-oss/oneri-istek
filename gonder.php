@@ -13,9 +13,9 @@ if (empty($itiraf_text)) {
     exit;
 }
 
+// Önce metni gönder
 $message = "🆕 YENİ İTİRAF\n\n📝 " . $itiraf_text . "\n\n🕐 " . date('d.m.Y H:i');
 
-// Önce metni gönder (hızlı)
 $url = "https://api.telegram.org/bot{$bot_token}/sendMessage";
 $data = ['chat_id' => $chat_id, 'text' => $message];
 
@@ -28,8 +28,11 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 // Medya varsa gönder
-if (isset($_FILES['media']) && $_FILES['media']['error'] === 0 && $_FILES['media']['size'] > 0) {
+if (isset($_FILES['media']) && $_FILES['media']['error'] === 0) {
     
+    $file_tmp = $_FILES['media']['tmp_name'];
+    $file_name = $_FILES['media']['name'];
+    $file_type = $_FILES['media']['type'];
     $file_size = $_FILES['media']['size'];
     
     if ($file_size > 100 * 1024 * 1024) {
@@ -37,14 +40,8 @@ if (isset($_FILES['media']) && $_FILES['media']['error'] === 0 && $_FILES['media
         exit;
     }
     
-    $file_tmp = $_FILES['media']['tmp_name'];
-    $file_name = $_FILES['media']['name'];
-    $file_type = $_FILES['media']['type'];
-    
-    if (strpos($file_type, 'image') !== false) {
-        $media_url = "https://api.telegram.org/bot{$bot_token}/sendPhoto";
-        $field = 'photo';
-    } elseif (strpos($file_type, 'video') !== false) {
+    // Video hariç her şeyi belge olarak gönder
+    if (strpos($file_type, 'video') !== false) {
         $media_url = "https://api.telegram.org/bot{$bot_token}/sendVideo";
         $field = 'video';
     } else {
@@ -52,7 +49,6 @@ if (isset($_FILES['media']) && $_FILES['media']['error'] === 0 && $_FILES['media
         $field = 'document';
     }
     
-    // CURLFile ile direkt gönder
     $post_fields = [
         'chat_id' => $chat_id,
         $field => new CURLFile($file_tmp, $file_type, $file_name)
@@ -63,21 +59,14 @@ if (isset($_FILES['media']) && $_FILES['media']['error'] === 0 && $_FILES['media
     curl_setopt($ch2, CURLOPT_POST, 1);
     curl_setopt($ch2, CURLOPT_POSTFIELDS, $post_fields);
     curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch2, CURLOPT_TIMEOUT, 300);
-    curl_setopt($ch2, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch2, CURLOPT_TIMEOUT, 120);
     curl_setopt($ch2, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
     $media_result = curl_exec($ch2);
-    $http_code = curl_getinfo($ch2, CURLINFO_HTTP_CODE);
     $curl_error = curl_error($ch2);
     curl_close($ch2);
     
     if ($curl_error) {
-        echo json_encode(['success' => false, 'error' => 'Bağlantı hatası: ' . $curl_error]);
-        exit;
-    }
-    
-    if ($http_code !== 200) {
-        echo json_encode(['success' => false, 'error' => 'Telegram HTTP ' . $http_code]);
+        echo json_encode(['success' => false, 'error' => 'Medya hatası: ' . $curl_error]);
         exit;
     }
 }
