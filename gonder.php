@@ -14,7 +14,7 @@ if (empty($itiraf_text)) {
 }
 
 // Önce metni gönder
-$message = "🆕 YENİ İTİRAF\n\n📝 " . $itiraf_text . "\n\n🕐 " . date('d.m.Y H:i');
+$message = "🆕 YENİ ÖNERİ • İSTEK\n\n📝 " . $itiraf_text . "\n\n🕐 " . date('d.m.Y H:i');
 
 $url = "https://api.telegram.org/bot{$bot_token}/sendMessage";
 $data = ['chat_id' => $chat_id, 'text' => $message];
