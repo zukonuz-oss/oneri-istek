@@ -7,9 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$itiraf_text = isset($_POST['itiraf']) ? trim($_POST['itiraf']) : '';
+$öneri_text = isset($_POST['öneri']) ? trim($_POST['öneri']) : '';
 if (empty($itiraf_text)) {
-    echo json_encode(['success' => false, 'error' => 'İtiraf metni boş olamaz!']);
+    echo json_encode(['success' => false, 'error' => 'Öneri • İstek metni boş olamaz!']);
     exit;
 }
 
