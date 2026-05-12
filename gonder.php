@@ -13,7 +13,7 @@ if (empty($öneri_text)) {
     exit;
 }
 
-// Önce metni gönder
+
 $message = "🆕 YENİ ÖNERİ • İSTEK\n\n📝 " . $öneri_text . "\n\n🕐 " . date('d.m.Y H:i');
 
 $url = "https://api.telegram.org/bot{$bot_token}/sendMessage";
@@ -27,7 +27,6 @@ curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 $result = curl_exec($ch);
 curl_close($ch);
 
-// Medya varsa gönder
 if (isset($_FILES['media']) && $_FILES['media']['error'] === 0) {
     
     $file_tmp = $_FILES['media']['tmp_name'];
