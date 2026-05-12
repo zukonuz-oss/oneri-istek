@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anonim İtiraf</title>
+    <title>Anonim Öneri • İstek</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -101,22 +101,22 @@
 </head>
 <body>
     <div class="container" id="formContainer">
-        <h1>🫣 Anonim İtiraf</h1>
+        <h1>🫣 Anonim Öneri • İstek</h1>
         <p class="subtitle">Kimliğin gizli kalacak, rahat ol</p>
         <form id="itirafForm">
             <textarea name="itiraf" placeholder="İtirafını buraya yaz..." required maxlength="2000"></textarea>
             <div class="file-upload">
-                <label for="file">📎 Fotoğraf veya Video Ekle (Max 100MB)</label>
+                <label for="file">📎 Fotoğraf Ekle</label>
                 <input type="file" id="file" name="media" accept="image/*,video/*" onchange="showFileName(this)">
                 <div class="file-name" id="fileName"></div>
             </div>
-            <p class="note">⚠️ Video max 100MB olmalı</p>
+            <p class="note">⚠️ Fotoğraf max 100MB olmalı</p>
             <button type="submit" class="send-btn">Gönder</button>
         </form>
     </div>
     <div class="success" id="successMessage">
         <h2>✅ Gönderildi!</h2>
-        <p>İtirafın başarıyla iletildi.</p>
+        <p>Öneri • İstek Başarıyla İletildi.</p>
         <br>
         <button onclick="location.reload()" style="background:#667eea; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">Yeni İtiraf</button>
     </div>
@@ -140,7 +140,7 @@
             if (fileInput.files[0]) {
                 const sizeMB = fileInput.files[0].size / (1024 * 1024);
                 if (sizeMB > 100) {
-                    alert('Dosya 100MB\'dan küçük olmalı!');
+                    alert('Dosya 100MB\'dan küçük olmalı');
                     btn.textContent = 'Gönder';
                     btn.disabled = false;
                     return;
