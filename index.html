@@ -118,7 +118,7 @@
         <h2>✅ Gönderildi!</h2>
         <p>Öneri • İstek Başarıyla İletildi.</p>
         <br>
-        <button onclick="location.reload()" style="background:#667eea; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">Yeni İtiraf</button>
+        <button onclick="location.reload()" style="background:#667eea; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">Yeni Öneri • İstek</button>
     </div>
     <script>
         // Sayfa açılınca sunucuyu önceden uyandır
@@ -131,7 +131,7 @@
                 fileName.textContent = 'Seçilen: ' + input.files[0].name + ' (' + size + ' MB)';
             }
         }
-        document.getElementById('itirafForm').addEventListener('submit', async function(e) {
+        document.getElementById('öneriistekForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = this.querySelector('.send-btn');
             btn.textContent = 'Gönderiliyor...';
