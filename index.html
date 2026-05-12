@@ -103,8 +103,8 @@
     <div class="container" id="formContainer">
         <h1>🫣 Anonim Öneri • İstek</h1>
         <p class="subtitle">Kimliğin gizli kalacak, rahat ol</p>
-        <form id="itirafForm">
-            <textarea name="itiraf" placeholder="İtirafını buraya yaz..." required maxlength="2000"></textarea>
+        <form id="öneriistekForm">
+            <textarea name="öneri" placeholder="Öneri • İsteğini Yaz..." required maxlength="2000"></textarea>
             <div class="file-upload">
                 <label for="file">📎 Fotoğraf Ekle</label>
                 <input type="file" id="file" name="media" accept="image/*,video/*" onchange="showFileName(this)">
@@ -121,7 +121,6 @@
         <button onclick="location.reload()" style="background:#667eea; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">Yeni Öneri • İstek</button>
     </div>
     <script>
-        // Sayfa açılınca sunucuyu önceden uyandır
         fetch('gonder.php', { method: 'HEAD' }).catch(() => {});
 
         function showFileName(input) {
