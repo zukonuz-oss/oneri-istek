@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, sans-serif;
-            background: #0f0f0f;
+            background: #850000;
             color: white;
             min-height: 100vh;
             display: flex;
@@ -18,8 +18,8 @@
             padding: 20px;
         }
         .container {
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: #520000;
+            border: 1px solid #790000;
             border-radius: 15px;
             padding: 30px;
             width: 100%;
@@ -32,7 +32,7 @@
         }
         .subtitle {
             text-align: center;
-            color: #888;
+            color: #444444;
             margin-bottom: 30px;
             font-size: 14px;
         }
@@ -50,22 +50,22 @@
         }
         textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #3700ff;
         }
         .file-upload {
             margin: 15px 0;
         }
         .file-upload label {
             display: block;
-            background: #2a2a2a;
-            border: 1px solid #333;
+            background: #ff7878;
+            border: 1px solid #fa1e1e;
             border-radius: 10px;
             padding: 15px;
             text-align: center;
             cursor: pointer;
             transition: 0.3s;
         }
-        .file-upload label:hover { background: #333; }
+        .file-upload label:hover { background: #ff0000; }
         .file-upload input { display: none; }
         .file-name {
             color: #888;
@@ -75,7 +75,7 @@
         .send-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #bbff00 0%, #444300 100%);
             color: white;
             border: none;
             border-radius: 10px;
@@ -102,8 +102,8 @@
 </head>
 <body>
     <div class="container" id="formContainer">
-        <h1>🫣 Anonim Öneri • İstek</h1>
-        <p class="subtitle">Kimliğin gizli kalacak, rahat ol</p>
+        <h1>Anonim Öneri • İstek</h1>
+        <p class="subtitle">Kimliğin gizli kalacak rahat ol</p>
         <form id="öneriistekForm">
             <textarea name="öneri" placeholder="Öneri • İsteğini Yaz..." required maxlength="2000"></textarea>
             <div class="file-upload">
@@ -116,8 +116,8 @@
         </form>
     </div>
     <div class="success" id="successMessage">
-        <h2>✅ Gönderildi!</h2>
-        <p>Öneri • İstek Başarıyla İletildi.</p>
+        <h2>✅ Gönderildi</h2>
+        <p>Öneri • İstek Başarıyla İletildi</p>
         <br>
         <button onclick="location.reload()" style="background:#667eea; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer;">Yeni Öneri • İstek</button>
     </div>
@@ -161,7 +161,7 @@
                     alert('Hata: ' + result.error);
                 }
             } catch (err) {
-                alert('Bağlantı hatası! Lütfen tekrar dene.');
+                alert('Bağlantı hatası! Lütfen tekrar dene');
             }
             btn.textContent = 'Gönder';
             btn.disabled = false;
